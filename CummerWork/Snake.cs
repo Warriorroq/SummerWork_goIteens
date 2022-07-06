@@ -10,11 +10,16 @@ namespace SummerWork
     {
         public Vector2Int direction;
         private Dictionary<ConsoleKey, Vector2Int> _inputMap;
+        
         public Snake(int x, int y) : base(null, new Vector2Int(x,y))
         {
-            Game.keyPressed += GameKeyPressed;
             direction = new Vector2Int(0, 0);
             CreateDefaultInputMap();
+        }
+        public override void Start()
+        {
+            Game.keyPressed += GameKeyPressed;
+            Game.Instance.currentScene.onCollision += Collide;
         }
         private void CreateDefaultInputMap()
         {
@@ -25,67 +30,93 @@ namespace SummerWork
             _inputMap.Add(ConsoleKey.D, new Vector2Int(1, 0));
         }
 
-        private void GameKeyPressed(ConsoleKey obj)
+        private void GameKeyPressed(ConsoleKey key)
         {
-            if (obj == ConsoleKey.Spacebar)
-            {
-                CreateBody();
-                return;
-            }
-            direction = _inputMap[obj];
+            if(_inputMap.ContainsKey(key))
+                direction = _inputMap[key];
         }
         public override void Update()
         {
-            _down?.Update();
+            body?.Update();
             position += direction;
         }
         public override void Draw()
         {
             RenderWindow.Instance.ChangeCharacter(position.y, position.x, DrawCharacters.snakeCharacter);
-            _down?.Draw();
+            body?.Draw();
         }
         public override void CreateBody()
         {
-            if (_down is not null)
+            if (body is not null)
             {
-                _down.CreateBody();
+                body.CreateBody();
             }
             else
             {
-                _down = new SnakeBody(this, position - direction);
+                body = new SnakeBody(this, position - direction);
             }
 
+        }
+        public override void Collide(List<GameObject> objects)
+        {
+            foreach (var obj in objects)
+            {
+                switch (obj)
+                {
+                    case Apple:
+                        if(position == obj.position)
+                        {
+                            (obj as Apple)?.ChangePosition();
+                            CreateBody();
+                        }
+                        break;
+                    case Snake:
+                        Snake snake = obj as Snake;
+                        SnakeBody body = snake.body;
+                        while(body is not null)
+                        {
+                            if(body.position == position)
+                            {
+                                Game.Instance.EndGame();
+                                break;
+                            }
+                            body = body.body;
+                        }
+                        break;
+                }
+            }
         }
     }
     public class SnakeBody : GameObject
     {
 
+        public SnakeBody body;
         private SnakeBody _head;
-        protected SnakeBody _down;
+
         public SnakeBody(SnakeBody head, Vector2Int position) : base(position)
         {
             _head = head;
         }
         public virtual void CreateBody()
         {
-            if (_down is not null)
+            if (body is not null)
             {
-                _down.CreateBody();
+                body.CreateBody();
             }
             else
             {
-                _down = new SnakeBody(this, position - _head.position);
+                body = new SnakeBody(this, position - _head.position);
             }
         }
         public override void Update()
         {
-            _down?.Update();
+            body?.Update();
             position = _head.position;
         }
         public override void Draw()
         {
             RenderWindow.Instance.ChangeCharacter(position.y, position.x, DrawCharacters.snakeBody);
-            _down?.Draw();
+            body?.Draw();
         }
     }
 }
