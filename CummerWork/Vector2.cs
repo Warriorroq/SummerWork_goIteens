@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SummerWork
+﻿namespace SummerWork
 {
     public class Vector2<T>
     {
+        public T y;
+        public T x;
+
         public Vector2()
         {
             x = default;
@@ -18,7 +15,5 @@ namespace SummerWork
             this.x = x;
             this.y = y;
         }
-        public T y;
-        public T x;
     }
 }

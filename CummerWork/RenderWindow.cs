@@ -3,7 +3,7 @@
     public class RenderWindow : Singletone<RenderWindow>
     {
         private char[,] _buffer;
-        private (int, int) _size;
+        private Vector2Int _size;
         public RenderWindow()
         {
             SetSize(1, 1);
@@ -11,28 +11,28 @@
         }
         public void SetSize(int height, int width)
         {
-            _size = (height, width);
-            _buffer = new char[_size.Item1, _size.Item2];
+            _size = new Vector2Int(width, height);
+            _buffer = new char[_size.y, _size.x];
         }
         public void ChangeCharacter(int height, int width, char symbol)
         {
-            if (height < 0 || height >= _size.Item1)
+            if (height < 0 || height >= _size.y)
                 return;
-            if (width < 0 || width >= _size.Item2)
+            if (width < 0 || width >= _size.x)
                 return;
             _buffer[height, width] = symbol;
         }
         public void ClearWindow()
         {
-            for (int i = 0; i < _size.Item1; i++)
-                for (int j = 0; j < _size.Item2; j++)
+            for (int i = 0; i < _size.y; i++)
+                for (int j = 0; j < _size.x; j++)
                     _buffer[i, j] = DrawCharacters.clearWindow;
         }
         public void Draw()
         {
-            for (int i = 0; i < _size.Item1; i++)
+            for (int i = 0; i < _size.y; i++)
             {
-                for (int j = 0; j < _size.Item2; j++)
+                for (int j = 0; j < _size.x; j++)
                 {
                     Console.SetCursorPosition(j, i);
                     Console.Write(_buffer[i, j]);
