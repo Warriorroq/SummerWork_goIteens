@@ -3,14 +3,14 @@ namespace SummerWork
 {
     public class Game
     {
+        public static event Action<ConsoleKey>? keyPressed;
         private Stopwatch _stopwatch = new Stopwatch();
         private bool _running;
-        private const int _fps = 1000 / 2;
+        private const int _fps = 1000 / 10;
         private Scene _scene;
         public Game(string name)
         {
             Console.Title = name;
-            _scene = null;
         }
         public void LoadScene(Scene scene)
         {
@@ -27,6 +27,8 @@ namespace SummerWork
         {
             while (_running)
             {
+                if (Console.KeyAvailable)
+                    keyPressed(Console.ReadKey().Key);
                 _stopwatch.Restart();
                 _scene.Update();
                 _scene.Draw();
