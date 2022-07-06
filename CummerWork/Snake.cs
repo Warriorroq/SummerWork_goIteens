@@ -39,6 +39,7 @@ namespace SummerWork
         {
             body?.Update();
             position += direction;
+            Teleport();
         }
         public override void Draw()
         {
@@ -85,6 +86,17 @@ namespace SummerWork
                         break;
                 }
             }
+        }
+        private void Teleport()
+        {
+            if (position.x < 0)
+                position.x = 23;
+            if (position.y < 0)
+                position.y = 23;
+            if (position.x > 23)
+                position.x = 0;
+            if (position.y > 23)
+                position.y = 0;
         }
     }
     public class SnakeBody : GameObject
