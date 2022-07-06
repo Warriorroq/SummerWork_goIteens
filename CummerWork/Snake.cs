@@ -67,7 +67,8 @@ namespace SummerWork
                     case Apple:
                         if(position == obj.position)
                         {
-                            (obj as Apple)?.ChangePosition();
+                            (obj as Apple).ChangePosition();
+                            Game.Instance.score++;
                             CreateBody();
                         }
                         break;
@@ -83,6 +84,12 @@ namespace SummerWork
                             }
                             body = body.body;
                         }
+                        break;
+                    case Wall:
+                        if (position == obj.position)
+                            Game.Instance.EndGame();
+                        break;
+                    default:
                         break;
                 }
             }
