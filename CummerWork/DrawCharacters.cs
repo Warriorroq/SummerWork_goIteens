@@ -7,5 +7,6 @@
         public const char snakeBody = '0';
         public const char apple = 'A';
         public const char wall = '#';
+        public const char ball = '@';
     }
 }

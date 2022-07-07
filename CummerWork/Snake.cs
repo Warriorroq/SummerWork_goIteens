@@ -67,6 +67,7 @@ namespace SummerWork
                     case Apple:
                         if(position == obj.position)
                         {
+                            (obj as Ball)?.AddRandomnessToVelocity();
                             (obj as Apple).ChangePosition();
                             Game.Instance.score++;
                             CreateBody();

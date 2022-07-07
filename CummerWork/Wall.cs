@@ -19,6 +19,8 @@ namespace SummerWork
             {
                 switch (obj)
                 {
+                    case Ball:
+                        break;
                     case Apple:
                         if (position == obj.position)
                             (obj as Apple).ChangePosition();
