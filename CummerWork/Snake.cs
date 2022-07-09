@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SummerWork
+﻿namespace SummerWork
 {
     public class Snake : SnakeBody
     {
@@ -106,6 +100,8 @@ namespace SummerWork
             if (position.y > 23)
                 position.y = 0;
         }
+        public override string ToString()
+            =>$"Snake, posision x:{position.x} y:{position.y}";
     }
     public class SnakeBody : GameObject
     {

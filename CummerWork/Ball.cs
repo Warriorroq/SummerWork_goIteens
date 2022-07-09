@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SummerWork
+﻿namespace SummerWork
 {
     public class Ball : Apple
     {
@@ -86,5 +80,7 @@ namespace SummerWork
             => _velocity.y *= -1;        
         public override void Draw()
             => RenderWindow.Instance.ChangeCharacter(position.y, position.x, DrawCharacters.ball);
+        public override string ToString()
+            => $"Ball, posision x:{position.x} y:{position.y}";
     }
 }

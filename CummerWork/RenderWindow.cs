@@ -4,6 +4,7 @@
     {
         private char[,] _buffer;
         private Vector2Int _size;
+        private static int _debugLine;
         public RenderWindow()
         {
             SetSize(1, 1);
@@ -41,6 +42,13 @@
             }
             Console.WriteLine();
 
+        }
+        public static void Debug(object obj, bool clear = true)
+        {
+            Console.SetCursorPosition(0, Instance._size.y);
+            if(clear)
+                Console.Write(new string(' ', Console.WindowWidth));
+            Console.Write(obj.ToString());
         }
     }
 }
