@@ -9,7 +9,7 @@ namespace SummerWork
         public int score;
         private Stopwatch _stopwatch = new Stopwatch();
         private bool _running;
-        private int _fps = 1000 / 10;
+        private int _fps = 10;
         public void LoadScene(Scene scene)
         {
             random = new Random();
@@ -32,6 +32,7 @@ namespace SummerWork
         }
         private void Update()
         {
+            int waitTime = 1000 / _fps;
             while (_running)
             {
                 if (Console.KeyAvailable)
@@ -39,7 +40,7 @@ namespace SummerWork
                 _stopwatch.Restart();
                 currentScene.Update();
                 currentScene.Draw();
-                Thread.Sleep(Math.Clamp(_fps - _stopwatch.Elapsed.Milliseconds, 0, _fps));
+                Thread.Sleep(Math.Clamp(waitTime - _stopwatch.Elapsed.Milliseconds, 0, waitTime));
             }
             EndGame();
         }
