@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 namespace SummerWork
 {
-    public class Game : Singletone<Game>
+    public class Game : Singletone<Game>, IDisposable
     {
         public static event Action<ConsoleKey>? keyPressed;
         public Random random;
@@ -10,7 +10,6 @@ namespace SummerWork
         private Stopwatch _stopwatch = new Stopwatch();
         private bool _running;
         private int _fps = 1000 / 10;
-        private float _currentFpsTime;
         public void LoadScene(Scene scene)
         {
             random = new Random();
@@ -29,9 +28,7 @@ namespace SummerWork
         {
             _running = false;
             Console.Clear();
-            Console.SetCursorPosition(0, 0);
-            Console.WriteLine($" Game over\n Score {score}\n Thanks for playing!");
-            Console.ReadKey();
+            Console.WriteLine($" Game over\n Score {score}\n");
         }
         private void Update()
         {
@@ -44,6 +41,13 @@ namespace SummerWork
                 currentScene.Draw();
                 Thread.Sleep(Math.Clamp(_fps - _stopwatch.Elapsed.Milliseconds, 0, _fps));
             }
+            EndGame();
+        }
+
+        public virtual void Dispose()
+        {
+            currentScene.Dispose();
+            ClearInstance();
         }
     }
 }

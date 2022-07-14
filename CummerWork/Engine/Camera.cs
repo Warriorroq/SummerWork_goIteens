@@ -26,5 +26,7 @@
             }
             RenderWindow.Debug(position);
         }
+        public override void Dispose()
+            =>main = null;
     }
 }

@@ -32,5 +32,7 @@ namespace SummerWork.SnakeGame
         }
         public override void Draw()
             =>Camera.main.ChangeCharacter(position.y, position.x, DrawCharacters.wall);
+        public override void Dispose()
+            => Game.Instance.currentScene.onCollision -= Collide;
     }
 }

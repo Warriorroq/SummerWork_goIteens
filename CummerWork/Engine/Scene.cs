@@ -1,6 +1,6 @@
 ﻿namespace SummerWork
 {
-    public class Scene
+    public class Scene : IDisposable
     {
         public event Action<List<GameObject>> onCollision;
         private List<GameObject> _objects;
@@ -34,6 +34,17 @@
             foreach (var obj in _objects)
                 obj.Draw();
             RenderWindow.Instance.Draw();
+        }
+        public virtual void Dispose()
+        {
+            DisposeList(_objects);
+            DisposeList(_objectsForDestroy);
+        }
+        private void DisposeList(List<GameObject> list)
+        {
+            foreach (var obj in list)
+                obj.Dispose();
+            list.Clear();
         }
     }
 }

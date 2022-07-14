@@ -16,5 +16,7 @@
             if (_instance is null)
                 _instance = new T();
         }
+        protected virtual void ClearInstance()
+            => _instance = default(T);
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace SummerWork
 {
-    public abstract class GameObject
+    public abstract class GameObject : IDisposable
     {
         public Vector2Int position;
         public GameObject(Vector2Int position) 
@@ -9,5 +9,6 @@
         public virtual void Draw() { }
         public virtual void Update() { }
         public virtual void Collide(List<GameObject> objects) { }
+        public virtual void Dispose() { }
     }
 }

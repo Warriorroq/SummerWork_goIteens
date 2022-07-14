@@ -90,6 +90,8 @@
         }
         public override string ToString()
             =>$"Snake, posision x:{position.x} y:{position.y}";
+        public override void Dispose()
+            => Game.Instance.currentScene.onCollision -= Collide;
     }
     public class SnakeBody : GameObject
     {

@@ -64,5 +64,7 @@
             => Camera.main.ChangeCharacter(position.y, position.x, DrawCharacters.ball);
         public override string ToString()
             => $"Ball, posision x:{position.x} y:{position.y}";
+        public override void Dispose()
+            =>Game.Instance.currentScene.onCollision -= Collide;
     }
 }
