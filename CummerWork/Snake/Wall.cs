@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SummerWork
+namespace SummerWork.SnakeGame
 {
     public class Wall : GameObject
     {
@@ -31,6 +31,6 @@ namespace SummerWork
             }
         }
         public override void Draw()
-            =>RenderWindow.Instance.ChangeCharacter(position.y, position.x, DrawCharacters.wall);
+            =>Camera.main.ChangeCharacter(position.y, position.x, DrawCharacters.wall);
     }
 }

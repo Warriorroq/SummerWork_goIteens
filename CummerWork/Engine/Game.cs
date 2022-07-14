@@ -9,7 +9,8 @@ namespace SummerWork
         public int score;
         private Stopwatch _stopwatch = new Stopwatch();
         private bool _running;
-        private const int _fps = 1000 / 10;
+        private int _fps = 1000 / 10;
+        private float _currentFpsTime;
         public void LoadScene(Scene scene)
         {
             random = new Random();

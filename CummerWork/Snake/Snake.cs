@@ -1,4 +1,4 @@
-﻿namespace SummerWork
+﻿namespace SummerWork.SnakeGame
 {
     public class Snake : SnakeBody
     {
@@ -33,11 +33,10 @@
         {
             body?.Update();
             position += direction;
-            Teleport();
         }
         public override void Draw()
         {
-            RenderWindow.Instance.ChangeCharacter(position.y, position.x, DrawCharacters.snakeCharacter);
+            Camera.main.ChangeCharacter(position.y, position.x, DrawCharacters.snakeCharacter);
             body?.Draw();
         }
         public override void CreateBody()
@@ -89,17 +88,6 @@
                 }
             }
         }
-        private void Teleport()
-        {
-            if (position.x < 0)
-                position.x = 23;
-            if (position.y < 0)
-                position.y = 23;
-            if (position.x > 23)
-                position.x = 0;
-            if (position.y > 23)
-                position.y = 0;
-        }
         public override string ToString()
             =>$"Snake, posision x:{position.x} y:{position.y}";
     }
@@ -131,7 +119,7 @@
         }
         public override void Draw()
         {
-            RenderWindow.Instance.ChangeCharacter(position.y, position.x, DrawCharacters.snakeBody);
+            Camera.main.ChangeCharacter(position.y, position.x, DrawCharacters.snakeBody);
             body?.Draw();
         }
     }

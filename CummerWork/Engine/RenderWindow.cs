@@ -2,6 +2,10 @@
 {
     public class RenderWindow : Singletone<RenderWindow>
     {
+        public Vector2Int Size
+        {
+            get => _size;
+        }
         private char[,] _buffer;
         private Vector2Int _size;
         private static int _debugLine;
@@ -9,6 +13,7 @@
         {
             SetSize(1, 1);
             ClearWindow();
+            _size = new Vector2Int(Console.WindowWidth, Console.WindowHeight);
         }
         public void SetSize(int height, int width)
         {
@@ -36,12 +41,11 @@
                 for (int j = 0; j < _size.x; j++)
                 {
                     Console.SetCursorPosition(j, i);
-                    Console.Write(_buffer[i, j]);
+                    Console.WriteLine(_buffer[i, j]);
                 }
                 Console.WriteLine();
             }
             Console.WriteLine();
-
         }
         public static void Debug(object obj, bool clear = true)
         {

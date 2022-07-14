@@ -1,4 +1,4 @@
-﻿namespace SummerWork
+﻿namespace SummerWork.SnakeGame
 {
     public class Ball : Apple
     {
@@ -13,24 +13,6 @@
         public override void Update()
         {
             position += _velocity;
-            if (position.x < 0 || position.x >= 23)
-            {
-                if(position.x >= 23)
-                    position.x = 23;
-                else
-                    position.x = 0;
-                ReflectHoriosontal();
-                AddRandomnessToVelocity();
-            }
-            if (position.y < 0 || position.y >= 23)
-            {
-                if (position.y >= 23)
-                    position.y = 23;
-                else
-                    position.y = 0;
-                ReflectVertical();
-                AddRandomnessToVelocity();
-            }
         }
         public override void Collide(List<GameObject> objects)
         {
@@ -79,7 +61,7 @@
         private void ReflectVertical()
             => _velocity.y *= -1;        
         public override void Draw()
-            => RenderWindow.Instance.ChangeCharacter(position.y, position.x, DrawCharacters.ball);
+            => Camera.main.ChangeCharacter(position.y, position.x, DrawCharacters.ball);
         public override string ToString()
             => $"Ball, posision x:{position.x} y:{position.y}";
     }
