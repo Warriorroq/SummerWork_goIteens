@@ -6,46 +6,67 @@
         {
             get => _size;
         }
-        private char[,] _buffer;
         private Vector2Int _size;
-        private static int _debugLine;
+        private Dictionary<uint, (char[,], char)> _buffers;
+        private const char NonDrawableSymbol = '\0';
         public RenderWindow()
         {
+            _buffers = new Dictionary<uint, (char[,], char)>();
             SetSize(1, 1);
-            ClearWindow();
-            _size = new Vector2Int(Console.WindowWidth, Console.WindowHeight);
+            ClearWindows();
         }
+        public void CreateLayer(uint layer, char clearChar = NonDrawableSymbol)
+            => _buffers.Add(layer, (new char[_size.y, _size.x], clearChar));
         public void SetSize(int height, int width)
         {
             _size = new Vector2Int(width, height);
-            _buffer = new char[_size.y, _size.x];
+            foreach (var key in _buffers.Keys)
+                _buffers[key] = (new char[height, width], _buffers[key].Item2);
+            ClearWindows();
         }
-        public void ChangeCharacter(int height, int width, char symbol)
+        public void ChangeCharacter(int height, int width, char symbol, uint layer = 0)
         {
             if (height < 0 || height >= _size.y)
                 return;
             if (width < 0 || width >= _size.x)
                 return;
-            _buffer[height, width] = symbol;
+            if(_buffers.ContainsKey(layer))
+                _buffers[layer].Item1[height, width] = symbol;
         }
-        public void ClearWindow()
+        public void ClearWindows()
         {
-            for (int i = 0; i < _size.y; i++)
-                for (int j = 0; j < _size.x; j++)
-                    _buffer[i, j] = DrawCharacters.clearWindow;
+            foreach (var key in _buffers.Keys)
+            {
+                for (int i = 0; i < _size.y; i++)
+                    for (int j = 0; j < _size.x; j++)
+                        _buffers[key].Item1[i, j] = _buffers[key].Item2;
+            }
         }
         public void Draw()
         {
+            var result = new char[_size.y, _size.x];
+            foreach (var key in _buffers.Keys)
+            {
+                var buffer = _buffers[key];
+                for (int i = 0; i < _size.y; i++)
+                {
+                    for (int j = 0; j < _size.x; j++)
+                    {
+                        if (NonDrawableSymbol == buffer.Item1[i, j])
+                            continue;
+                        result[i, j] = buffer.Item1[i, j];
+                    }
+                }
+            }
             for (int i = 0; i < _size.y; i++)
             {
                 for (int j = 0; j < _size.x; j++)
                 {
                     Console.SetCursorPosition(j, i);
-                    Console.WriteLine(_buffer[i, j]);
+                    Console.Write(result[i, j]);
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine();
         }
         public static void Debug(object obj, bool clear = true)
         {

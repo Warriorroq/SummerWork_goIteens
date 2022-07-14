@@ -28,6 +28,8 @@
         {
             if(_inputMap.ContainsKey(key))
                 direction = _inputMap[key];
+            if(key == ConsoleKey.Spacebar)
+                CreateBody();
         }
         public override void Update()
         {
@@ -36,7 +38,7 @@
         }
         public override void Draw()
         {
-            Camera.main.ChangeCharacter(position.y, position.x, DrawCharacters.snakeCharacter);
+            Camera.main.ChangeCharacter(position.y, position.x, DrawCharacters.snakeCharacter, 2);
             body?.Draw();
         }
         public override void CreateBody()
@@ -121,7 +123,7 @@
         }
         public override void Draw()
         {
-            Camera.main.ChangeCharacter(position.y, position.x, DrawCharacters.snakeBody);
+            Camera.main.ChangeCharacter(position.y, position.x, DrawCharacters.snakeBody, 2);
             body?.Draw();
         }
     }

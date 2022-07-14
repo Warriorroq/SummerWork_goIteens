@@ -13,10 +13,10 @@
             if(main is null)
                 main = this;
         }
-        public void ChangeCharacter(int height, int width, char symbol)
+        public void ChangeCharacter(int height, int width, char symbol, uint layer = 0)
         {
             Vector2Int newPositon = new Vector2Int(width, height) - position + _offSet;
-            RenderWindow.Instance.ChangeCharacter(newPositon.y, newPositon.x, symbol);
+            RenderWindow.Instance.ChangeCharacter(newPositon.y, newPositon.x, symbol, layer);
         }
         public override void Update()
         {

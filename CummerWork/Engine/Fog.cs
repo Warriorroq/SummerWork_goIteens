@@ -22,7 +22,7 @@
                     int y1 = y - renderCenter.y;
                     int leftPartOfCircleFormula = x1 * x1 + y1 * y1;
                     if (leftPartOfCircleFormula >= sqrtRadius)
-                        RenderWindow.Instance.ChangeCharacter(y,x,_forSymbol);
+                        RenderWindow.Instance.ChangeCharacter(y,x,_forSymbol,1);
                 }
             }
         }

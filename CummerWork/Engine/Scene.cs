@@ -30,7 +30,7 @@
             => _objectsForDestroy.Add(obj);
         public void Draw()
         {
-            RenderWindow.Instance.ClearWindow();
+            RenderWindow.Instance.ClearWindows();
             foreach (var obj in _objects)
                 obj.Draw();
             RenderWindow.Instance.Draw();
