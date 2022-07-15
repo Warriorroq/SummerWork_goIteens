@@ -4,7 +4,7 @@
     {
         public Vector2Int direction;
         private Dictionary<ConsoleKey, Vector2Int> _inputMap;
-        
+        private int _score;
         public Snake(int x, int y) : base(null, new Vector2Int(x,y))
         {
             direction = new Vector2Int(0, 0);
@@ -64,7 +64,7 @@
                         {
                             (obj as Ball)?.AddRandomnessToVelocity();
                             (obj as Apple).ChangePosition();
-                            Game.Instance.score++;
+                            _score++;
                             CreateBody();
                         }
                         break;
@@ -75,7 +75,7 @@
                         {
                             if(body.position == position)
                             {
-                                Game.Instance.EndGame();
+                                EndGameSessionWithMessage();
                                 break;
                             }
                             body = body.body;
@@ -83,12 +83,18 @@
                         break;
                     case Wall:
                         if (position == obj.position)
-                            Game.Instance.EndGame();
+                            EndGameSessionWithMessage();
                         break;
                     default:
                         break;
                 }
             }
+        }
+        private void EndGameSessionWithMessage()
+        {
+            Game.Instance.EndGame();
+            Console.Clear();
+            Console.WriteLine($"Score: {_score}");
         }
         public override string ToString()
             =>$"Snake, posision x:{position.x} y:{position.y}";

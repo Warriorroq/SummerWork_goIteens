@@ -35,6 +35,7 @@ while (true)
 
     for (int i = 0; i < 100; i++)
         scene.AddObjects(new Apple(new Vector2Int(rand.Next(-99, 100), rand.Next(-99, 100))));
+
     Game.Instance.LoadScene(scene);
     Game.Instance.Start();
     Game.Instance.Dispose();
