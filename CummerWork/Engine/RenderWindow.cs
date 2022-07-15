@@ -70,10 +70,17 @@
         }
         public static void Debug(object obj, bool clear = true)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
+            if (clear)
+                ClearDebug();
             Console.SetCursorPosition(0, Instance._size.y);
-            if(clear)
-                Console.Write(new string(' ', Console.WindowWidth));
-            Console.Write(obj.ToString());
+            Console.Write(obj);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+        private static void ClearDebug()
+        {
+            Console.SetCursorPosition(0, Instance._size.y);
+            Console.Write(new string(' ', Console.WindowWidth));
         }
     }
 }
