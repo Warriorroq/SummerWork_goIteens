@@ -6,6 +6,7 @@
         {
             get => _size;
         }
+        public Action? onScreenChange;
         private Vector2Int _size;
         private Dictionary<uint, (char[,], char)> _buffers;
         private const char NonDrawableSymbol = '\0';
@@ -17,12 +18,21 @@
         }
         public void CreateLayer(uint layer, char clearChar = NonDrawableSymbol)
             => _buffers.Add(layer, (new char[_size.y, _size.x], clearChar));
-        public void SetSize(int height, int width)
+        private void SetSize(int height, int width)
         {
             _size = new Vector2Int(width, height);
             foreach (var key in _buffers.Keys)
                 _buffers[key] = (new char[height, width], _buffers[key].Item2);
             ClearWindows();
+        }
+        public void ChangeScreenResolution(int height, int width)
+        {
+            if (width <= 0 || width >= Console.WindowWidth)
+                return;
+            if (height <= 0 || height >= Console.WindowHeight)
+                return;
+            SetSize(height, width);
+            onScreenChange?.Invoke();
         }
         public void ChangeCharacter(int height, int width, char symbol, uint layer = 0)
         {

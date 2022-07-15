@@ -2,18 +2,39 @@
 using System.Text;
 using SummerWork.SnakeGame;
 Random rand = new Random();
+
 RenderWindow.TryCreateInstance();
-RenderWindow.Instance.SetSize(24, 36);
+Game.TryCreateInstance();
+
+int width = 36;
+int height = 24;
+RenderWindow.Instance.ChangeScreenResolution(height, width);
 RenderWindow.Instance.CreateLayer(0, DrawCharacters.clearWindow);
 RenderWindow.Instance.CreateLayer(1);
 RenderWindow.Instance.CreateLayer(2);
+
 Console.Title = "Snake";
 Console.OutputEncoding = Encoding.Unicode;
+
+Game.keyPressed += GameKeyPressed;
+
+void GameKeyPressed(ConsoleKey obj)
+{
+    if (obj == ConsoleKey.NumPad1)
+    {
+        width++;
+        RenderWindow.Instance.ChangeScreenResolution(height, width);       
+    }
+    else if (obj == ConsoleKey.NumPad0)
+    {
+        width--;
+        RenderWindow.Instance.ChangeScreenResolution(height, width);
+    }
+}
 
 while (true)
 {
     Console.Clear();
-    Game.TryCreateInstance();
 
     Scene scene = new Scene();
     var snake = new Snake(rand.Next(-5, 5), rand.Next(-5, 5));

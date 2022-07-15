@@ -8,7 +8,12 @@
         {
             _forSymbol = fogChar;
             _distance = distance;
+            RenderWindow.Instance.onScreenChange += OnScreenChange;
         }
+
+        private void OnScreenChange()
+            =>_distance = RenderWindow.Instance.Size.x / 4;
+
         public override void Draw()
         {
             var renderSize = RenderWindow.Instance.Size;
