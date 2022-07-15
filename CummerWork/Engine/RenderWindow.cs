@@ -27,12 +27,43 @@
         }
         public void ChangeScreenResolution(int height, int width)
         {
+            ClearDebug();
             if (width <= 0 || width >= Console.WindowWidth)
                 return;
             if (height <= 0 || height >= Console.WindowHeight)
                 return;
+            var lastSize = _size;
             SetSize(height, width);
+            ClearChangeableVision(lastSize);
             onScreenChange?.Invoke();
+        }
+        private void ClearChangeableVision(Vector2Int lastSize)
+        {
+            ClearRightSide(lastSize);
+            ClearDownSide(lastSize);
+        }
+        private void ClearRightSide(Vector2Int lastSize)
+        {
+            if (lastSize.x > _size.x)
+            {
+                for (int y = 0; y < _size.y; y++)
+                {
+                    Console.SetCursorPosition(_size.x, y);
+                    Console.WriteLine(new string(' ', lastSize.x - _size.x));
+                }
+            }
+        }
+        private void ClearDownSide(Vector2Int lastSize)
+        {
+            if (lastSize.y > _size.y)
+            {
+
+                for (int y = _size.y; y < lastSize.y; y++)
+                {
+                    Console.SetCursorPosition(0, y);
+                    Console.WriteLine(new string(' ', lastSize.x));
+                }
+            }
         }
         public void ChangeCharacter(int height, int width, char symbol, uint layer = 0)
         {
