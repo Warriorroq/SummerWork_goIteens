@@ -101,9 +101,9 @@
             }
             for (int i = 0; i < _size.y; i++)
             {
+                Console.SetCursorPosition(0, i);
                 for (int j = 0; j < _size.x; j++)
                 {
-                    Console.SetCursorPosition(j, i);
                     Console.Write(result[i, j]);
                 }
                 Console.WriteLine();
