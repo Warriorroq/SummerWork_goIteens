@@ -99,7 +99,11 @@
         public override string ToString()
             =>$"Snake, posision x:{position.x} y:{position.y}";
         public override void Dispose()
-            => Game.Instance.currentScene.onCollision -= Collide;
+        {
+            Game.keyPressed -= GameKeyPressed;
+            Game.Instance.currentScene.onCollision -= Collide;
+            _inputMap.Clear();
+        }
     }
     public class SnakeBody : GameObject
     {

@@ -10,6 +10,7 @@
         private Vector2Int _size;
         private Dictionary<uint, (char[,], char)> _buffers;
         private const char NonDrawableSymbol = '\0';
+        private char[,] _drawableRect;
         public RenderWindow()
         {
             _buffers = new Dictionary<uint, (char[,], char)>();
@@ -20,6 +21,7 @@
             => _buffers.Add(layer, (new char[_size.y, _size.x], clearChar));
         private void SetSize(int height, int width)
         {
+            _drawableRect = new char[height, width];
             _size = new Vector2Int(width, height);
             foreach (var key in _buffers.Keys)
                 _buffers[key] = (new char[height, width], _buffers[key].Item2);
@@ -85,7 +87,6 @@
         }
         public void Draw()
         {
-            var result = new char[_size.y, _size.x];
             foreach (var key in _buffers.Keys)
             {
                 var buffer = _buffers[key];
@@ -95,7 +96,7 @@
                     {
                         if (NonDrawableSymbol == buffer.Item1[i, j])
                             continue;
-                        result[i, j] = buffer.Item1[i, j];
+                        _drawableRect[i, j] = buffer.Item1[i, j];
                     }
                 }
             }
@@ -104,7 +105,7 @@
                 Console.SetCursorPosition(0, i);
                 for (int j = 0; j < _size.x; j++)
                 {
-                    Console.Write(result[i, j]);
+                    Console.Write(_drawableRect[i, j]);
                 }
                 Console.WriteLine();
             }

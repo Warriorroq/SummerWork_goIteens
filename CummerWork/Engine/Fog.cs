@@ -31,5 +31,7 @@
                 }
             }
         }
+        public override void Dispose()
+            =>RenderWindow.Instance.onScreenChange -= OnScreenChange;
     }
 }
