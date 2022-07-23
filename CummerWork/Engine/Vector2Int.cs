@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SummerWork
+﻿namespace SummerWork
 {
     public class Vector2Int : Vector2<int>
     {

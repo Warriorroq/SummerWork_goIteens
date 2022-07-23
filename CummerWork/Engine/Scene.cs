@@ -19,7 +19,8 @@
             => _objects.AddRange(objects);
         public void Update()
         {
-            onCollision(_objects);
+            if(_objects.Count > 0)
+                onCollision(_objects);
             foreach (var obj in _objects)
                 obj.Update();
             foreach (var obj in _objectsForDestroy)

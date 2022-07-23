@@ -43,13 +43,13 @@ while (true)
         new Ball(new Vector2Int(0, 0)),
         new Camera(snake, snake.position)
     );
+    scene.AddObjects(new Fog(9, '■'));
     //creating box
     for (int i = -100; i < 100; i++)
         scene.AddObjects(new Wall(new Vector2Int(-100, i)),
             new Wall(new Vector2Int(100, i)),
             new Wall(new Vector2Int(i, -100)),
-            new Wall(new Vector2Int(i, 100)),
-            new Fog(9, '■')
+            new Wall(new Vector2Int(i, 100))
             );
     for (int i = 0; i < 1000; i++)
         scene.AddObjects(new Wall(new Vector2Int(rand.Next(-100, 100), rand.Next(-100, 100))));
