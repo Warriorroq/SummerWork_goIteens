@@ -37,7 +37,7 @@ while (true)
     Console.Clear();
 
     Scene scene = new Scene();
-    var snake = new Snake(rand.Next(-5, 5), rand.Next(-5, 5));
+    var snake = new Snake(rand.Next(-5, 5), rand.Next(-5, 5), 3);
     scene.AddObjects(
         snake,
         new Ball(new Vector2Int(0, 0)),

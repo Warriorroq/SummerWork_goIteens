@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using SFML.System;
-namespace SummerWork
+﻿namespace SummerWork
 {
     public class Game : Singletone<Game>, IDisposable
     {

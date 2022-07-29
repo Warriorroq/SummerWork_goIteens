@@ -5,9 +5,11 @@
         public Vector2Int direction;
         private Dictionary<ConsoleKey, Vector2Int> _inputMap;
         private int _score;
-        public Snake(int x, int y) : base(null, new Vector2Int(x,y))
+        private int _health;
+        public Snake(int x, int y, int health) : base(null, new Vector2Int(x,y))
         {
             direction = new Vector2Int(0, 0);
+            _health = health;
             CreateDefaultInputMap();
         }
         public override void Start()
@@ -83,7 +85,13 @@
                         break;
                     case Wall:
                         if (position == obj.position)
-                            EndGameSessionWithMessage();
+                        {
+                            _health--;
+                            if(_health <= 0)
+                                EndGameSessionWithMessage();
+                            this.body?.Dispose();
+                            this.body = null;
+                        }
                         break;
                     default:
                         break;
@@ -103,6 +111,7 @@
             Game.keyPressed -= GameKeyPressed;
             Game.Instance.currentScene.onCollision -= Collide;
             _inputMap.Clear();
+            body?.Dispose();
         }
     }
     public class SnakeBody : GameObject
@@ -135,6 +144,12 @@
         {
             Camera.main.ChangeCharacter(position.y, position.x, DrawCharacters.snakeBody, 2);
             body?.Draw();
+        }
+        public override void Dispose()
+        {
+            _head = null;
+            body?.Dispose();
+            body = null;
         }
     }
 }

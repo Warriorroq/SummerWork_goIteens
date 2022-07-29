@@ -27,7 +27,6 @@
             {
                 position = _followTo.position;
             }
-            RenderWindow.Debug(position);
         }
         public override void Dispose()
         {
