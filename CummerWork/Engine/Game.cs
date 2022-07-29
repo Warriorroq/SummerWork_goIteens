@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using SFML.System;
 namespace SummerWork
 {
     public class Game : Singletone<Game>, IDisposable
@@ -6,7 +7,7 @@ namespace SummerWork
         public static event Action<ConsoleKey>? keyPressed;
         public Random random;
         public Scene currentScene;
-        private Stopwatch _stopwatch = new Stopwatch();
+        private GameTimer _timer;
         private bool _running;
         private int _fps = 10;
         public void LoadScene(Scene scene)
@@ -16,6 +17,8 @@ namespace SummerWork
         }
         public void Start()
         {
+            _timer = new GameTimer();
+            _timer.Init(_fps);
             if (currentScene is null)
                 return;
             currentScene.Start();
@@ -26,22 +29,24 @@ namespace SummerWork
             =>_running = false;
         private void Update()
         {
-            int waitTime = 1000 / _fps;
             while (true)
             {
                 if (Console.KeyAvailable)
                     keyPressed(Console.ReadKey().Key);
-                _stopwatch.Restart();
-                currentScene.Update();
-                if (!_running)
-                    break;
-                currentScene.Draw();
-                Thread.Sleep(Math.Clamp(waitTime - _stopwatch.Elapsed.Milliseconds, 0, waitTime));
+                if (_timer.IsUpdate())
+                {
+                    currentScene.Update();
+                    if (!_running)
+                        break;
+                    currentScene.Draw();
+                }
+                Thread.Sleep(Math.Clamp(_timer.waitTime - _timer.DeltaTimeInMiliseconds, 0, _timer.waitTime));
             }
         }
         public virtual void Dispose()
         {
             currentScene.Dispose();
+            currentScene = null;
             ClearInstance();
         }
     }
